@@ -74,97 +74,195 @@
 
 	
 		<div class="markdown-body">
-		<h1>写出来的效果</h1>
+		<h1>My Github Star</h1>
 
-		<ol>
-<li>清晰地提出问题，需要解决的技术问题是什么，技术挑战有哪些，背景知识有哪些；</li>
-<li>总结直到当前的技术进展，按照统一的思路将各种已有的解决方案和技术分类，让整个话题的前后发展变得清晰；</li>
-<li>评论各类方案的优缺点，尤其是在哪些情况下会导致问题；</li>
-<li>提出这个方向目前主要存在的、还没解决或者没有彻底解决的问题，给后续研究提供线索。</li>
-</ol>
+		<p>整理自己star过的内容</p>
 
-<h1 id="toc_0">janus(CVE-2017-13156)漏洞分析</h1>
+<hr/>
 
-<p>17.7.31 DexGurad 向谷歌报告此问题<br/>
-17.11  Google向合作伙伴发布补丁<br/>
-17.12.4 Android更新安全公告并分配CVE编号(CVE-2017-13156)</p>
+<p>[TOC]<br/>
+My Github Star</p>
 
-<h1 id="toc_1">漏洞产生原因：</h1>
+<ul>
+<li><a href="#Android%20Devoloper">Android Devoloper</a></li>
+<li><a href="#Android%20Reverse-Engineering%20Tools">Android Reverse-Engineering Tools</a></li>
+<li><a href="#Android%20Hook">Android Hook</a></li>
+<li><a href="#Android%20Classloader">Android Classloader</a></li>
+<li><a href="#Android%20Obfuscate">Android Obfuscate</a></li>
+<li><a href="#Android%20deobfuscated">Android deobfuscated </a></li>
+<li><a href="#Android%20Packer">Android Packer</a></li>
+<li><a href="#Android%20UnPacker">Android UnPacker</a></li>
+<li><a href="#Android%20Anti-Emulator">Android Anti-Emulator</a></li>
+<li><a href="#Android%20Vulnerability">Android Vulnerability</a></li>
+<li><a href="#Malware%20Analysis%20System">Malware Analysis System</a></li>
+<li><a href="#CTF">CTF</a></li>
+<li><a href="#Software%20development">Software development</a></li>
+<li><a href="#Vulnerability-Research">Vulnerability-Research</a></li>
+<li><a href="#Fuzz">Fuzz</a></li>
+<li><a href="#AComputer%20Basic">Computer Basic</a></li>
+</ul>
 
-<p>在4.4.3上的机器上安装失败<br/>
-adb安装显示     Failure [INSTALL_FAILED_INVALID_APK]<br/>
-apk包安装显示   There was a problem parsing the package</p>
+<h2 id="toc_0">Android  Devoloper</h2>
 
-<p>影响范围使用ART虚拟机的5.0～8.0</p>
+<ul>
+<li><a href="https://github.com/ZQiang94/Andriod-collect-blogs">Andriod-collect-blogs</a></li>
+<li><a href="https://github.com/lizixian18/AppLock">AppLock应用程序锁</a></li>
+<li><a href="https://github.com/xrubioj/SecureControls">Implementation of Android views that detect screen overlays</a></li>
+<li><a href="https://github.com/Xbalien/awesome-adb/blob/master/README.md">ADB用法大全</a></li>
+<li><a href="https://github.com/JeremyTang/EncryptNDK">NDK实现AES/DES</a></li>
+<li><a href="https://github.com/fkzhang/WechatUnrecalled">Java版xposed安卓防撤回插件</a></li>
+<li><a href="https://github.com/rarnu/wechat_no_revoke">Kotlin编写的xposed安卓防撤回插件</a></li>
+<li><a href="https://github.com/ernw/AndroTickler">Penetration testing and auditing toolkit for Android apps.</a></li>
+<li><a href="https://github.com/blackarbiter/Android_Code_Arbiter">针对Android Studio的源码扫描工具</a></li>
+</ul>
 
-<h1 id="toc_2">安装机制：ART和安装过程</h1>
+<h2 id="toc_1">Android Reverse-Engineering Tools</h2>
 
-<p><img src="media/15127442739910/15129192361513.jpg" alt=""/><br/>
-ART引入了AOT（Ahead of Time）这种预编译技术，在应用程序安装的过程中，ART就已经将所有的字节码重新编译成了机器码。应用程序运行过程中无需进行实时的编译工作，只需要进行直接调用。<br/>
-由于ART采用和dalvik在执行上的不同</p>
+<ul>
+<li><a href="https://github.com/nsxz/Reverse-Engineering">IDA plugins</a></li>
+<li><a href="https://github.com/lief-project/LIEF">parse, modify and abstract ELF</a></li>
+<li><a href="https://github.com/TheCodeArtist/elf-parser">Identifying/Extracting various sections of an ELF file</a></li>
+<li><a href="https://github.com/DennisYurichev/RE-for-beginners">how to start RE</a></li>
+<li><a href="https://github.com/feicong/jni_helper">Android SO自动化分析工具</a></li>
+<li><a href="https://github.com/bkerler/dump_avb_signature">Dump Android Verified Boot Signature</a></li>
+<li><a href="https://github.com/shuihuadx/XposedHook">Xposed免重启模块</a></li>
+</ul>
 
-<h1 id="toc_3">应用安装涉及到的目录</h1>
+<h2 id="toc_2">Android Hook</h2>
 
-<p>/system/app ：系统自带的应用程序，获得adb root权限才能删除<br/>
-/data/app ：用户程序安装的目录。安装时把apk文件复制到此目录<br/>
-/data/data ：存放应用程序的数据<br/>
-/data/dalvik-cache：将apk中的dex文件安装到dalvik-cache目录下(dex文件是dalvik虚拟机的可执行文件,当然，ART–Android Runtime的可执行文件格式为oat，启用ART时，系统会执行dex文件转换至oat文件)<br/>
-/data/system ：该目录下的packages.xml文件，类似于Windows的注册表，这个文件是在解析apk时由writeLP()创建的，里面记录了系统的permissions，以及每个apk的name,codePath,flags,ts,version,uesrid等信息，这些信息主要通apk的AndroidManifest.xml解析获取，解析完apk后将更新信息写入这个文件并保存到flash，下次开机直接从里面读取相关信息添加到内存相关列表中。当有apk升级，安装或删除时会更新这个文件。<br/>
-/data/system/packages.xml中内容详解(这里列举的标签内容不一定完整，只是列举核心内容，packages.xml的完整定义详见官方文档)：</p>
+<ul>
+<li><a href="https://github.com/ele7enxxh/Android-Inline-Hook">Android inline hook</a></li>
+<li><a href="https://github.com/boyliang/AllHookInOne">Android通用hook</a></li>
+<li><a href="https://github.com/sensepost/objection">Frida教程</a></li>
+<li><a href="https://github.com/coderebot/zygote_hook">zygote_hook in Android6.0 </a></li>
+<li><a href="https://github.com/avs333/injector">Inject code to process memory, link it and run in a separate thread.</a></li>
+</ul>
 
-<h1 id="toc_4">app的安装</h1>
+<h2 id="toc_3">Android Classloader</h2>
 
-<p>四种安装方式：<br/>
-系统应用安装：开机时加载系统的APK和应用，没有安装界面；<br/>
-网络下载应用安装：通过各种market应用完成，没有安装界面；<br/>
-ADB工具安装：即通过Android的SDK开发tools里面的adb.exe程序安装，没有安装界面；<br/>
-第三方应用安装：通过SD卡里的APK文件安装(比如双击APK文件触发)，有安装界面，系统默认已经安装了一个安装卸载应用的程序，即由packageinstaller.apk应用处理安装及卸载过程的界面。</p>
+<ul>
+<li><a href="https://github.com/Qihoo360/RePlugin">RePlugin</a></li>
+<li><a href="https://github.com/andoop/DroiPluginTest">360-DroiPlugin学习演示示例</a></li>
+<li><a href="https://github.com/Qihoo360/Lipland">A lightweight plug-in framework for Android.</a></li>
+<li><a href="https://github.com/didi/VirtualAPK">VirtualAPK</a></li>
+</ul>
 
-<p>安装过程：<br/>
-1.拷贝到/data/app目录下  com.example.app/base.apk</p>
+<h2 id="toc_4">Android Obfuscate</h2>
 
-<p>2.解压apk，拷贝文件。创建应用的数据目录<br/>
-为了加快app的启动速度，apk在安装的时候，会首先将app的可执行文件（dex）拷贝到 /data/dalvik-cache 目录，缓存起来。<br/>
-然后，在/data/data/目录下创建应用程序的数据目录（以应用的包名命名），存放应用的相关数据，如数据库、xml文件、cache、二进制的so动态库等等。</p>
+<ul>
+<li><a href="https://github.com/GoSSIP-SJTU/Armariris">孤挺花-LLVM混淆器</a></li>
+<li><a href="https://github.com/SCUBSRGroup/OLLVM_Deobfuscation">OLLVM_Deobfuscation</a></li>
+<li><a href="https://github.com/sslab-gatech/avpass">avpass反静态检测的工具</a></li>
+</ul>
 
-<p>3.解析AndroidManifinest.xml</p>
+<h2 id="toc_5">Android obfuscated code</h2>
 
-<p>4.向Launcher应用申请添加创建快捷方式<br/>
- AndroidMainfest.xml在主启动项里添加Launcher</p>
+<ul>
+<li><a href="https://github.com/enovella/jebscripts">jeb脚本反混淆java代码</a></li>
+<li><a href="https://github.com/CalebFenton/simplify">Generic Android Deobfuscator</a></li>
+<li> <a href="https://github.com/JonathanSalwan/Tigress_protection">使用符号执行和LLVM实现反混淆</a></li>
+</ul>
 
-<h1 id="toc_5">漏洞利用</h1>
+<h2 id="toc_6">Android Packer</h2>
 
-<h2 id="toc_6">1.pass AV的过程：</h2>
+<ul>
+<li><a href="https://github.com/godlikewangjun/dexknife-wj">安卓加固打包集成器</a></li>
+<li><a href="https://github.com/guanchao/AppProtect">整理一些app常见的加固方法</a></li>
+<li><a href="https://github.com/guanchao/apk_auto_enforce">APK一键自动加固脚本</a></li>
+</ul>
 
-<p>为什么杀毒引擎检测不出，杀软本地扫描的政策</p>
+<h2 id="toc_7">Android UnPacker</h2>
 
-<p>如何检测：<br/>
-1.防止上架<br/>
-dex在应该上架不了</p>
+<ul>
+<li><a href="https://github.com/CheckPointSW/android_unpacker">修改6.0源码脱壳DEF CON 25</a></li>
+<li><a href="https://github.com/ArthurWong/NajiaDexFix">娜迦Dex文件修复工具</a></li>
+<li><a href="https://github.com/SCUBSRGroup/CrackSo">自动化脱so壳的工具</a></li>
+<li><a href="https://github.com/gnaixx/dex-hdog">脱壳狗</a></li>
+</ul>
 
-<p>2.防止作为payload来释放<br/>
-1.卫士静态扫描dex？？</p>
+<h2 id="toc_8">Android Anti-Emulator</h2>
 
-<p>2.云查</p>
+<ul>
+<li><a href="https://github.com/MindMac/HideAndroidEmulator">安卓模拟器检测</a></li>
+<li><a href="https://github.com/ysrc/Anti-Emulator">基于文件特征的模拟器检测</a></li>
+</ul>
 
-<h2 id="toc_7">伪造升级，继承原有权限</h2>
+<h2 id="toc_9">Android Vulnerability</h2>
 
-<p>一般app应用的更新如下：<br/>
-1.通过第三方市场更新<br/>
-相信大家对于如何安装一个Apk都比较熟悉吧，原理也是比较简单的。</p>
+<ul>
+<li><a href="https://github.com/Fuzion24/AndroidKernelExploitationPlayground">Android Kernel Exploit</a></li>
+<li><a href="https://github.com/hyln9/VIKIROOT">VIKIROOT</a></li>
+<li><a href="https://github.com/NoahS96/Cloak-And-Dagger">An overlay attack example</a></li>
+<li><a href="https://github.com/WooyunDota/StartActivityCheck">StartActivityCheck</a></li>
+<li><a href="https://github.com/ele7enxxh/poc-exp">eled7大佬的poc</a></li>
+<li> <a href="https://github.com/hardenedlinux/offensive_poc">offensive的poc</a></li>
+<li> <a href="https://github.com/jiayy/android_vuln_poc-exp">jayy大佬的poc</a></li>
+</ul>
 
-<p>（1）通过downloadId获取下载的Uri。</p>
+<h2 id="toc_10">Malware Analysis System</h2>
 
-<p>（2）将Uri设置到Itent的setDataAndType作为启动条件。</p>
+<ul>
+<li><a href="https://github.com/Tencent/HaboMalHunter">哈勃分析器</a></li>
+<li><a href="https://github.com/droidefense/engine">Droidefense: Advance Android Malware Analysis Framework</a></li>
+</ul>
 
-<p>（3）调用startActivity启动对应Intent即可。<br/>
-2.打开应用，提示更新</p>
+<h2 id="toc_11">CTF</h2>
 
-<p>/data/system ：该目录下的packages.xml文件，类似于Windows的注册表，这个文件是在解析apk时由writeLP()创建的，里面记录了系统的permissions，以及每个apk的name,codePath,flags,ts,version,uesrid等信息，这些信息主要通apk的AndroidManifest.xml解析获取，解析完apk后将更新信息写入这个文件并保存到flash，下次开机直接从里面读取相关信息添加到内存相关列表中。当有apk升级，安装或删除时会更新这个文件。<br/>
-/data/system/packages.xml中内容详解(这里列举的标签内容不一定完整，只是列举核心内容，packages.xml的完整定义详见官方文档)：</p>
+<ul>
+<li><a href="https://github.com/p4-team/ctf">CTF</a></li>
+<li><a href="https://github.com/r4gnax/Sploits-Protostar">Protostar-CTF-Python-write-up</a></li>
+<li><a href="https://github.com/xtiankisutsa/awesome-mobile-CTF">awesome-mobile-ctf</a></li>
+<li><a href="https://github.com/stfpeak/CTF">CTF博客+教程</a></li>
+<li><a href="https://github.com/Naetw/CTF-pwn-tips">CTF-pwn-tips</a></li>
+<li><a href="https://github.com/bkerler/exploit_me">Very vulnerable ARM application (CTF style exploitation tutorial)</a></li>
+</ul>
+
+<h2 id="toc_12">Software development</h2>
+
+<ul>
+<li><a href="https://github.com/Prodesire/Python-Guide-CN">Python-Guide-CN</a></li>
+<li><a href="https://github.com/OmkarPathak/Python-Programs">Python-Programs</a></li>
+<li><a href="https://github.com/binux/pyspider">A Powerful Spider(Web Crawler) System in Python.</a></li>
+<li><a href="https://github.com/jobbole/awesome-c-cn">Awesome-C-CN</a></li>
+<li><a href="https://github.com/rapid7/metasploit-framework">metasploit-framework</a></li>
+<li><a href="https://github.com/codebutler/fun-with-native-code">fun-with-native-code</a></li>
+<li><a href="https://github.com/jaywcjlove/awesome-mac">Awesome-Mac</a></li>
+</ul>
+
+<h2 id="toc_13">Vulnerability-Research</h2>
+
+<ul>
+<li><a href="https://github.com/sergey-pronin/Awesome-Vulnerability-Research">Awesome-Vulnerability-Research</a></li>
+<li><a href="https://github.com/SecWiki/linux-kernel-exploits">Linux-kernel-exploit</a></li>
+<li><a href="https://github.com/InteliSecureLabs/Linux_Exploit_Suggester">Linux_Exploit_Suggester</a></li>
+<li><a href="https://github.com/nluedtke/linux_kernel_cves">linux_kernel_cves</a></li>
+<li><a href="https://github.com/xairy/linux-kernel-exploitation">linux-kernel-exploitation</a></li>
+<li><a href="https://github.com/raminfp/Understanding_Linux_Kernel_Vulnerability">Understanding_Linux_Kernel_Vulnerability</a></li>
+<li><a href="https://github.com/PaulSec/awesome-sec-talks">Awesome-Sec-Talks</a></li>
+</ul>
+
+<h2 id="toc_14">Fuzz</h2>
+
+<ul>
+<li><a href="https://github.com/ThomasKing2014/PinAFL">PinFUZZ</a></li>
+<li><a href="https://github.com/k0keoyo/Some-Kernel-Fuzzing-Paper">Some-Kernel-Fuzzing-Paper</a></li>
+</ul>
+
+<h2 id="toc_15">Computer Basic</h2>
+
+<ul>
+<li><a href="https://github.com/Tassandar/OSASK">30制作操作系统</a></li>
+<li><a href="https://github.com/lotabout/write-a-C-interpreter">手把手教你制作一个C语言编译器</a></li>
+<li><a href="https://github.com/mengning/linuxkernel">深入理解Linux内核</a></li>
+<li><a href="https://github.com/0xAX/linux-insides">linux-insides</a></li>
+<li><a href="https://github.com/cirosantilli/linux-kernel-module-cheat">linux-kernel-module-cheat</a></li>
+</ul>
 
 
 		</div>
+	
+
+ 
 	
 
   
